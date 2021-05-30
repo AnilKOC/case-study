@@ -1,0 +1,23 @@
+DATA MAIL;
+infile datalines delimiter=','; 
+LENGTH MAIL $ 25 COMPANY $25;
+INPUT MAIL $ COMPANY $;
+COMPANY = scan(MAIL,2,'@');
+COMPANY = scan(COMPANY,1,'.');
+COMPANY = lowcase(COMPANY);
+IF COMPANY = 'gmail' THEN COMPANY = "Kişisel";
+LABEL MAIL = 'MAIL' COMPANY = 'COMPANY';
+DATALINES;
+deniz@sadeyazilim.com,
+kadir@SADEYAZILIM.COM,
+kadir@afirma.com,
+Ceyda@gmail.com,
+ali@gmail.com,
+tamer@sadeyazilim.com,
+müge@testbank.com.tr,
+;
+RUN;
+
+PROC SORT data=MAIL;
+	by COMPANY;
+run;
